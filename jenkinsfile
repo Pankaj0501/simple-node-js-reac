@@ -12,6 +12,14 @@ pipeline {
 	  
 	  }
 	}
+
+  stage("Upload @planetcast") {
+            steps {
+                withAWS(region:"us-east-2", credentials:"6936e6c6-beaa-40d4-91af-74970cd37c58") {
+                   s3Upload(file:"build", bucket:"reactapprepo", path:"${env.BRANCH_NAME}")
+                }
+                }    
+            }
    }
      
  }
