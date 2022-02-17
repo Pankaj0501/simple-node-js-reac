@@ -1,6 +1,7 @@
 pipeline {
   agent any
   tools {nodejs "Node"}
+
   
    stages {
     stage('Build'){
@@ -11,11 +12,12 @@ pipeline {
     sh 'npm test'
 	  
 	  }
+
 	}
 
   stage("Upload @planetcast") {
             steps {
-                withAWS(region:"us-east-2", credentials:"6936e6c6-beaa-40d4-91af-74970cd37c58") {
+                withAWS(region:"us-east-2", credentials:"AWS") {
                    s3Upload(file:"build", bucket:"reactapprepo", path:"${env.BRANCH_NAME}")
                 }
                 }    
