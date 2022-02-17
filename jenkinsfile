@@ -1,24 +1,27 @@
 pipeline {
   agent any
+  environment{
+    BRANCH_NAME="master" 
+  }
   tools {nodejs "Node"}
 
   
    stages {
     stage('Build'){
 	  steps {
-	  git 'https://github.com/Pankaj0501/simple-node-js-reac.git'
-	  sh 'npm install'
-    sh 'npm run build'
-    sh 'npm test'
-	  
-	  }
+      git 'https://github.com/Pankaj0501/simple-node-js-reac.git'
+        sh 'npm install'
+        sh 'npm run build'
+        sh 'npm test'
+      
+      }
 
 	}
 
   stage("Upload @planetcast") {
             steps {
                 withAWS(region:"us-east-2", credentials:"AWS") {
-                   s3Upload(file:"build", bucket:"reactapprepo", path:"${env.BRANCH_NAME}")
+                   s3Upload(file:"$Build", bucket:"reactapprepo", path:"${env.BRANCH_NAME}")
                 }
                 }    
             }
