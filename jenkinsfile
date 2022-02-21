@@ -21,7 +21,7 @@ pipeline {
   stage("Upload @planetcast") {
             steps {
                 withAWS(region:"us-east-2", credentials:"AWS") {
-                   s3Upload(file:"$Build", bucket:"reactapprepo", path:"${env.BRANCH_NAME}")
+                   s3Upload(file:"Build", bucket:"reactapprepo", path:"${env.BRANCH_NAME}")
                 }
                 }    
             }
