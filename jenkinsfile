@@ -30,14 +30,15 @@ pipeline {
           }
         }
         
-    stage("Upload @planetcast") {
-            steps {
-                withAWS(region:"us-east-2", credentials:"AWS") {
-                s3Upload(file:"build", bucket:"reactapprepo")
+    stage("Upload") {
+         steps {
+            sh 'aws s3 cp /var/lib/jenkins/workspace/JOB1_pipeline/build/static/ s3://reactapprepo --recursive'
+            
                 }
             }
-                }    
-            } 
+                   
+      } 
 }
          
       
+    
